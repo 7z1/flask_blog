@@ -1,8 +1,4 @@
-### 创建数据库，charset=utf8mb4，参考下面的评论模型设置
-
-
-
-### 没有写html模板继承，有时间再补吧，或者感兴趣的自己写一下
+### 没有写html模板继承，有时间再补吧，或者感兴趣的自己抽取一下
 
 
 
@@ -11,6 +7,28 @@
 ### 如出现未备案，请直接访问：http://119.23.230.6/
 
 #### 后台管理地址：/admin/login			账号：admin	密码：admin
+
+
+
+安装过程：
+
+1. 下载源码git clone https://github.com/a4demon/flask_blog
+2. cd 到项目目录
+3. 根据自己需要是否创建虚拟环境，随后安装环境依赖  pip install -r  requirement.txt
+4. 创建数据库，注意！！创建数据库时需要设置charset=utf8mb4，具体参照下面的评论模型有详细写
+5. 修改config里面的数据库账号密码，以及数据库名
+6. 初始化数据库，迁移生成数据库
+   1.  python manage.py db init
+   2. python manage.py db migrate
+   3. python manage.py db upgrade
+7. 导入数据库，导入数据库之后谨慎起见再重新将数据库设置，以及相关的表字段设置charset=utf8mb4
+8. 运行程序
+
+
+
+
+
+
 
 
 
@@ -150,15 +168,20 @@ http://www.useragentstring.com/?uas={{ua}}&getJSON=all
 
 设置评论和留言支持emoji表情插入，防止访客留言时输入emoji表情导致报错
 
-设置字段支持utf8mb4
+设置留言表的字段支持utf8mb4
 ALTER table info_gbook modify email varchar(32) character set utf8mb4 collate utf8mb4_unicode_ci;
-
+ALTER table info_gbook modify replyName varchar(32) character set utf8mb4 collate utf8mb4_unicode_ci;
 ALTER table info_gbook modify content text character set utf8mb4 collate utf8mb4_unicode_ci;
 
-设置表支持utf8mb4
+设置留言表支持utf8mb4
 ALTER TABLE info_gbook CHARSET=utf8mb4;
+
+设置文章评论表支持utf8mb4
+ALTER table info_comment modify content text character set utf8mb4 collate utf8mb4_unicode_ci;
+
 设置库支持utf8mb4
 SET NAMES utf8mb4;
+
 查看数据库编码类型
 show variables like 'character%';
 
