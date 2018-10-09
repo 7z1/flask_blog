@@ -8,6 +8,10 @@
 
 #### 后台管理地址：/admin/login			账号：admin	密码：admin
 
+#### 前端代码链接:https://pan.baidu.com/s/1EDDD_ct4eYgxOlpzZw7IVA  密码:bgc2
+
+解压密码:yangqq.com
+
 
 
 安装过程：
@@ -167,6 +171,9 @@ http://www.useragentstring.com/?uas={{ua}}&getJSON=all
 
 
 设置评论和留言支持emoji表情插入，防止访客留言时输入emoji表情导致报错
+
+设置about_me的字段支持utf8mb4
+ALTER table info_adminuser modify about_me text character set utf8mb4 colla
 
 设置留言表的字段支持utf8mb4
 ALTER table info_gbook modify email varchar(32) character set utf8mb4 collate utf8mb4_unicode_ci;
