@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理 - {{ data.admin_dict.title }}</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.form.min.js"></script>
+	<script src="../../static/admin/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="../../static/admin/js/tinymce_setup.js"></script>
+	<script src="../../static/admin/js/admin_edit_detail.js"></script>
+    <script src="../../static/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：系统管理 > 系统配置编辑
+		</div>
+		<div class="pannel">
+			<form class="news_edit">
+			<h3 class="review_title">配置编辑</h3>
+	    	<div class="form_group">
+                <label>网站标题：</label>
+                <input name="title" type="text" class="input_txt2" value="{{ data.admin_dict.title }}">
+            </div>
+            <div class="form_group">
+                <label>网站描述：</label>
+                <input name="description" type="text" class="input_txt2" value="{{ data.admin_dict.description }}">
+            </div>
+            <div class="form_group">
+                <label>SEO关键词：</label>
+                <input name="keywords" type="text" class="input_txt2" value="{{ data.admin_dict.keywords }}">
+            </div>
+            <div class="form_group">
+                <label>云标签：</label>
+                <input name="tags" type="text" class="input_txt2" value="{{ data.admin_dict.tags }}">
+            </div>
+            <div class="form_group">
+                <label>Logo名称：</label>
+                <input name="logo_name" type="text" class="input_txt2" value="{{ data.admin_dict.logo_name }}">
+            </div>
+            <div class="form_group">
+                <label>站长QQ：</label>
+                <input name="qq" type="text" class="input_txt2" value="{{ data.admin_dict.qq }}">
+            </div>
+            <div class="form_group">
+                <label>站长邮箱：</label>
+                <input name="email" type="text" class="input_txt2" value="{{ data.admin_dict.email }}">
+            </div>
+            <div class="form_group">
+                <label>微信账号：</label>
+                <input name="wxid" type="text" class="input_txt2" value="{{ data.admin_dict.wxid }}">
+            </div>
+            <div class="form_group">
+                <label>底部标题：</label>
+                <input name="butoom_title" type="text" class="input_txt2" value="{{ data.admin_dict.butoom_title }}">
+            </div>
+
+            <div class="form_group">
+                <label>备案号：</label>
+                <input name="beian" type="text" class="input_txt2" value="{{ data.admin_dict.beian }}">
+            </div>
+            <div class="form_group">
+                <label>名片姓名：</label>
+                <input name="card_name" type="text" class="input_txt2" value="{{ data.admin_dict.card_name }}">
+            </div>
+            <div class="form_group">
+                <label>名片职位：</label>
+                <input name="card_job" type="text" class="input_txt2" value="{{ data.admin_dict.card_job }}">
+            </div>
+            <div class="form_group">
+                <label>名片介绍：</label>
+                <input name="card_about" type="text" class="input_txt2" value="{{ data.admin_dict.card_about }}">
+            </div>
+            <div class="form_group">
+                <label>名片头像：</label>
+                <img src="{{ data.admin_dict.card_avatar }}" alt="名片头像" class="index_pic">
+            </div>
+            <div class="form_group">
+                <label>上传头像图片：</label>
+                <input type="file" name="card_avatar" class="input_file">
+            </div>
+            <div class="form_group">
+                <label>二维码图片：</label>
+                <img src="{{ data.admin_dict.wxcode }}" alt="二维码图片" class="index_pic">
+            </div>
+            <div class="form_group">
+                <label>上传二维码图片：</label>
+                <input type="file" name="wxcode" class="input_file">
+            </div>
+            <div class="form_group">
+                <label>关于我：</label>
+                <div class="rich_wrap fl">
+                    <textarea name="content" id="content" class="ckeditor" rows="10" cols="80">
+                        {{ data.admin_dict.about_me }}
+                    </textarea>
+{#                    <input class="input_area" id="rich_content" name="about_me" value="{{ data.admin_dict.about_me }}">#}
+                </div>
+            </div>
+			<div class="form_group indent_group line_top">
+				<input type="submit" value="确定" class="confirm">
+				<input type="button" value="取消" class="cancel" onclick="cancel()">
+			</div>
+            {# 添加隐藏字段新闻id #}
+            <input type="hidden" name="admin_id" value="{{ data.admin_dict.id }}">
+            <input type="hidden" name="csrfmiddlewaretoken" value=getCookie("csrftoken")>
+			</form>	
+		</div>
+    <script type="text/javascript">
+        CKEDITOR.replace('content', {
+           filebrowserUploadUrl: '/admin/ckupload/',
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理 - {{ data.admin_dict.title }}</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<link rel="stylesheet" href="../../static/admin/css/jquery.pagination.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.pagination.min.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：系统管理>系统信息编辑
+	</div>
+		
+
+	<div class="pannel">			
+			<table class="common_table">
+                <tr>
+                    <th width="5%">id</th>
+                    <th width="70%">标题</th>
+                    <th width="15%">修改时间</th>
+                    <th width="10%">管理操作</th>
+                </tr>
+                {% for admin in data.admin_dict %}
+                    <tr>
+                        <td>{{ admin.id }}</td>
+                        <td class="tleft"><a href="/about.html" target="_blank">{{ admin.title }}</a></td>
+                        <td>{{ admin.update_time }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.admin_edit_detail') }}?admin_id={{ admin.id }}" class="edit">编辑</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+		</div>
+		
+		<div class="box">
+			<div id="pagination" class="page"></div>
+		</div>
+
+        <script>
+			$(function() {
+				$("#pagination").pagination({
+					currentPage: {{ data.current_page }},
+                    totalPage: {{ data.total_page }},
+                    callback: function(current) {
+                        window.location = '/admin/news_edit?p=' + current
+					}
+				});
+
+				$('.delete_news').click({
+
+                })
+			});
+		</script>
+	
+</body>
+</html>

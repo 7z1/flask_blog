@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../../static/news/js/main.js"></script>
+
+</head>
+<body>
+	<div class="header">
+        <a href="/" class="fl" style="color:white; font-size: 36px; line-height: 60px; margin-left: 15px">管 理 后 台</a>
+{#		<a href="/" class="logo fl"><img src="../../static/admin/images/logo.png" alt="logo"></a>#}
+		<a href="#" class="logout fr" onclick="login_out()">退 出</a>
+	</div>
+	
+	<div class="side_bar">
+		<div class="user_info">
+			<img src="{{ user.avatar_url }}" alt="头像">
+			<p>欢迎你 <em>{{ user.nick_name }}</em></p>
+		</div>
+
+		<div class="menu_con">
+			<div class="first_menu active"><a href="#" class="icon01">文章热度</a></div>
+			<ul class="sub_menu show">
+				<li><a class="icon022" href="{{ url_for('admin.news_count') }}" target="main_frame">热度统计</a></li>
+			</ul>
+			<div class="first_menu"><a href="#" class="icon03">内容管理</a></div>
+			<ul class="sub_menu">
+				<li><a href="{{ url_for('admin.add_action') }}" class="icon033" target="main_frame">文章推荐</a></li>
+				<li><a href="{{ url_for('admin.add_news') }}" class="icon033" target="main_frame">新增文章</a></li>
+				<li><a href="{{ url_for('admin.news_edit') }}" class="icon033" target="main_frame">文章管理</a></li>
+				<li><a href="{{ url_for('admin.news_type') }}" class="icon033" target="main_frame">分类管理</a></li>
+				<li><a href="{{ url_for('admin.gbook_edit') }}" class="icon033" target="main_frame">留言管理</a></li>
+				<li><a href="{{ url_for('admin.news_trash') }}" class="icon033" target="main_frame">回收站</a></li>
+			</ul>
+            <div class="first_menu"><a href="#" class="icon03">系统管理</a></div>
+			<ul class="sub_menu">
+                <li><a href="{{ url_for('admin.admin_add') }}" class="icon034" target="main_frame">新增管理员</a></li>
+				<li><a href="{{ url_for('admin.admin_user_edit') }}" class="icon032" target="main_frame">管理员账号管理</a></li>
+				<li><a href="{{ url_for('admin.admin_links') }}" class="icon032" target="main_frame">友情链接管理</a></li>
+				<li><a href="{{ url_for('admin.admin_text_edit') }}" class="icon031" target="main_frame">站点信息编辑</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="main_body" id="main_body">
+		<iframe src="{{ url_for('admin.news_count') }}" frameborder="0" id="main_frame" name="main_frame" frameborder="0" scrolling="auto"></iframe>
+	</div>
+	
+	<script>
+		$(function(){
+			$('.first_menu').click(function(){
+				$(this).addClass('active').siblings('.first_menu').removeClass('active');
+				$(this).next().slideDown().siblings('.sub_menu').slideUp();
+			})
+			var frame_w = $('#main_body').outerWidth();
+			var frame_h = $('#main_body').outerHeight();
+			$('#main_frame').css({'width':frame_w,'height':'100%'});
+		})
+	</script>
+
+</body>
+</html>

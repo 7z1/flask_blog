@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/admin_links.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：系统管理 > 友情链接管理
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<th width="5%">id</th>
+					<th width="35%">网站名称</th>
+					<th width="40%">网站地址</th>
+					<th width="20%">管理操作</th>
+				</tr>
+				{% for links in data.links_li %}
+                    <tr>
+                        <td>{{ links.id }}</td>
+                        <td>{{ links.name }}</td>
+                        <td>{{ links.url }}</td>
+                        <td>
+                            <a href="javascript:;" class="edit" style="float: left; margin-left: 42px">编辑</a>
+                            <a href="javascript:;" class="delete" data-type_id="{{ links.id }}" style="float: left; margin-left: 42px">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+				<tr>
+					<td colspan="4"><a href="javascript:;" class="addtype">新增链接</a></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改链接</h3>
+					<div class="form_group mt40">
+						<label class="input_label">网站名称：</label><input type="text" class="input_txt3">
+                        <br><br>
+						<label class="input_label">网站链接：</label><input type="text" class="input_txt4">
+						<span class="error_tip">提示文字</span>
+					</div>			
+					<div class="form_group line_top_link">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>	
+</body>
+</html>

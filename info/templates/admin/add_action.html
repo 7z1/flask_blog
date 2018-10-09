@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<link rel="stylesheet" href="../../static/admin/css/jquery.pagination.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.pagination.min.js"></script>
+    <script type="text/javascript" src="../../static/js/add_action.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：文章管理 > 文章推荐
+		<form class="news_filter_form">
+			<input type="text" name="keywords" placeholder="请输入关键字" class="input_txt">
+			<input type="submit" value="搜 索" class="input_sub">
+		</form>
+	</div>
+		
+
+	<div class="pannel">			
+			<table class="common_table">
+                <tr>
+                    <th width="5%">id</th>
+                    <th width="50%">标题</th>
+                    <th width="15%">banner推荐</th>
+                    <th width="15%">top推荐</th>
+                    <th width="15%">特别推荐</th>
+                </tr>
+                {% for news in data.news_dict %}
+                    <tr>
+                        <td>{{ news.id }}</td>
+                        <td class="tleft"><a href="/news/{{ news.id }}" target="_blank">{{ news.title }}</a></td>
+                        <td>
+                            {% if news.id in data.banner_news %}
+                                <a href="javascript:;" class="edit editok" action-type="banner" data-newsid="{{ news.id }}">已推荐</a>
+                            {% else %}
+                                <a href="javascript:;" class="edit" action-type="banner" data-newsid="{{ news.id }}">推荐</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if news.id in data.top_news %}
+                                <a href="javascript:;" class="edit editok" action-type="top" data-newsid="{{ news.id }}">已推荐</a>
+                            {% else %}
+                                <a href="javascript:;" class="edit" action-type="top" data-newsid="{{ news.id }}">推荐</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if news.id in data.tuijian_news %}
+                                <a href="javascript:;" class="edit editok" action-type="tuijian" data-newsid="{{ news.id }}">已推荐</a>
+                            {% else %}
+                                <a href="javascript:;" class="edit" action-type="tuijian" data-newsid="{{ news.id }}">推荐</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+		</div>
+		
+		<div class="box">
+			<div id="pagination" class="page"></div>
+		</div>
+
+        <script>
+			$(function() {
+				$("#pagination").pagination({
+					currentPage: {{ data.current_page }},
+                    totalPage: {{ data.total_page }},
+                    callback: function(current) {
+                        window.location = '/admin/add_action?p=' + current
+					}
+				});
+
+				$('.delete_news').click({
+
+                })
+			});
+		</script>
+	
+</body>
+</html>

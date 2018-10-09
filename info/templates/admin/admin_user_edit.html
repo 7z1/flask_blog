@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<link rel="stylesheet" href="../../static/admin/css/jquery.pagination.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.pagination.min.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：系统管理>管理员用户
+	</div>
+		
+
+	<div class="pannel">			
+			<table class="common_table">
+                <tr>
+                    <th width="10%">id</th>
+                    <th width="20%">用户名</th>
+                    <th width="20%">手机号</th>
+                    <th width="20%">修改时间</th>
+                    <th width="20%">最后登录时间</th>
+                    <th width="10%">管理操作</th>
+                </tr>
+                {% for admin in data.admin_user %}
+                    <tr>
+                        <td>{{ admin.id }}</td>
+                        <td>{{ admin.nick_name }}</td>
+                        <td>{{ admin.mobile }}</td>
+                        <td>{{ admin.register }}</td>
+                        <td>{{ admin.last_login }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.admin_user_detail') }}?admin_id={{ admin.id }}" class="edit">编辑</a>
+                            <br>
+                            <a href="{{ url_for('admin.user_delete') }}?admin_id={{ admin.id }}" class="edit delete_news">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+		</div>
+		
+		<div class="box">
+			<div id="pagination" class="page"></div>
+		</div>
+
+        <script>
+			$(function() {
+				$("#pagination").pagination({
+					currentPage: {{ data.current_page }},
+                    totalPage: {{ data.total_page }},
+                    callback: function(current) {
+                        window.location = '/admin/news_edit?p=' + current
+					}
+				});
+
+				$('.delete_news').click({
+
+                })
+			});
+		</script>
+	
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ data.admin_dict.title }}</title>
+<meta name="keywords" content="{{ data.admin_dict.keywords }}" />
+<meta name="description" content="{{ data.admin_dict.description }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../static/css/base.css" rel="stylesheet">
+<link href="../static/css/index.css" rel="stylesheet">
+<link href="../static/css/main.css" rel="stylesheet">
+<link href="../static/css/m.css" rel="stylesheet">
+<!--开头这里的样式为默认的风格，可以根据自己的喜好更换风格--><!--我的高亮效果是zenburn-->
+<link rel="stylesheet" href="../static/styles/androidstudio.css">
+<script src="../static/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="../static/js/jquery.min.js" type="text/javascript"></script>
+<script src="../static/js/jquery.easyfader.min.js"></script>
+<script src="../static/js/scrollReveal.js"></script>
+<script src="../static/js/common.js"></script>
+<script src="../static/js/index.js"></script>
+<script src="../static/news/js/detail.js"></script>
+<script src="../static/js/tags.js"></script>
+<style type="text/css">
+.sidebar {
+    pointer-events: none;
+}
+.cloud {
+    pointer-events: none;
+}
+#tagsList {
+	position: relative;
+{#	width: 450px;#}
+	width: 364px;
+{#	height: 450px;#}
+	height: 364px;
+{#	margin: 150px auto 0;#}
+    left: -29px;
+    pointer-events: none;
+}
+#tagsList a {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	font-family: cursive;
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 3px 6px;
+    pointer-events: auto;
+}
+#tagsList a:hover {
+	color: #FF0000;
+	letter-spacing: 2px;
+}
+</style>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header>
+  <!--menu begin 横向下拉菜单-->
+  <div class="menu">
+    <nav class="nav" id="topnav">
+      <h1 class="logo"><a href="{{ data.admin_dict.logo_image }}">{{ data.admin_dict.logo_name }}</a></h1>
+      <li><a href="/">Index</a> </li>
+      <li><a href="/about.html">About Me</a> </li>
+      {% for categories in data.categories_dicts %}
+        <li data-cid="{{ categories.id }}"><a href="/">{{ categories.name }}</a> </li>
+      {% endfor %}
+      <li><a href="/time.html">Time</a> </li>
+      <li><a href="/gbook.html">Guest Book</a> </li>
+    </nav>
+  </div>
+  <!--menu end-->
+</header>
+<article>
+  <h1 class="t_nav"><a href="/" class="n1">网站首页</a><a href="/" class="n2">{{ data.news.category.name }}</a></h1>
+  <div class="infosbox">
+    <div class="newsview">
+      <h3 class="news_title">{{ data.news.title }}</h3>
+      <div class="bloginfo">
+        <ul>
+          <li class="author"><a href="/">{{ data.news.source }}</a></li>
+          <li class="lmname"><a href="/">{{ data.news.category.name }}</a></li>
+          <li class="timer">{{ data.news.create_time }}</li>
+          <li class="view">{{ data.news.clicks }}</li>
+          <li class="like">{{ data.news.like_count }}</li>
+        </ul>
+      </div>
+      <div class="tags"><a href="/" target="_blank">个人博客</a> &nbsp; <a href="/" target="_blank">{{ data.news.category.name }}</a></div>
+      <div class="news_about"><strong>简介</strong>{{ data.news.digest }}</div>
+      <div class="news_con"> {{ data.news.content | safe }}</div>
+    </div>
+    <div class="share">
+      <p class="diggit"><a href="javascript:;" data-newsid="{{ data.news.id }}" data-likecount="{{ data.news.like_count }}"> 很赞哦！ </a>
+          {% if data.news.like_count >= 0 %}
+              (<b id="diggnum">{{ data.news.like_count }}</b>)
+          {% endif %}
+      </p>
+      <p class="dasbox"><a href="javascript:void(0)" onClick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏本站</a></p>
+      <div class="hide_box"></div>
+      <div class="shang_box" onclick="dashangToggle()">
+        <div class="shang_tit">
+          <p>感谢您的支持，我会继续努力的!</p>
+        </div>
+        <div class="shang_payimg"> <img src="../static/images/alipayimg.jpg" alt="扫码支持" title="扫一扫"> </div>
+        <div class="pay_explain">扫码打赏，你说多少就多少</div>
+        <div class="shang_payselect">
+          <div class="pay_item checked" data-id="alipay"> <span class="radiobox"></span> <span class="pay_logo"><img src="../static/images/alipay.jpg" alt="支付宝"></span> </div>
+          <div class="pay_item" data-id="weipay"> <span class="radiobox"></span> <span class="pay_logo"><img src="../static/images/wechat.jpg" alt="微信"></span> </div>
+        </div>
+        <script type="text/javascript">
+    $(function(){
+    	$(".pay_item").click(function(){
+    		$(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+    		var dataid=$(this).attr('data-id');
+    		$(".shang_payimg img").attr("src","../static/images/"+dataid+"img.jpg");
+    		$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+    		return false;
+    	});
+    });
+    function dashangToggle(){
+    	$(".hide_box").fadeToggle();
+    	$(".shang_box").fadeToggle();
+    }
+    </script> 
+      </div>
+    </div>
+{#    <div class="nextinfo">#}
+{#      <p>上一篇：<a href="/news/life/2018-03-13/804.html">作为一个设计师,如果遭到质疑你是否能恪守自己的原则?</a></p>#}
+{#      <p>下一篇：<a href="/news/life/">返回列表</a></p>#}
+{#    </div>#}
+  <!--
+    <div class="otherlink">
+      <h2>相关文章</h2>
+      <ul>
+        <li><a href="/download/div/2018-04-22/815.html" title="html5个人博客模板《黑色格调》">html5个人博客模板《黑色格调》</a></li>
+        <li><a href="/download/div/2018-04-18/814.html" title="html5个人博客模板主题《清雅》">html5个人博客模板主题《清雅》</a></li>
+        <li><a href="/download/div/2018-03-18/807.html" title="html5个人博客模板主题《绅士》">html5个人博客模板主题《绅士》</a></li>
+        <li><a href="/download/div/2018-02-22/798.html" title="html5时尚个人博客模板-技术门户型">html5时尚个人博客模板-技术门户型</a></li>
+        <li><a href="/download/div/2017-09-08/789.html" title="html5个人博客模板主题《心蓝时间轴》">html5个人博客模板主题《心蓝时间轴》</a></li>
+        <li><a href="/download/div/2017-07-16/785.html" title="古典个人博客模板《江南墨卷》">古典个人博客模板《江南墨卷》</a></li>
+        <li><a href="/download/div/2017-07-13/783.html" title="古典风格-个人博客模板">古典风格-个人博客模板</a></li>
+        <li><a href="/download/div/2015-06-28/748.html" title="个人博客《草根寻梦》—手机版模板">个人博客《草根寻梦》—手机版模板</a></li>
+        <li><a href="/download/div/2015-04-10/746.html" title="【活动作品】柠檬绿兔小白个人博客模板">【活动作品】柠檬绿兔小白个人博客模板</a></li>
+        <li><a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…">【匆匆那些年】总结个人博客经历的这四年…</a></li>
+      </ul>
+    </div>
+    -->
+    <div class="news_pl">
+      <h2>文章评论</h2>
+      <form action="" class="comment_form" data-newsid="{{ data.news.id }}">
+          <textarea placeholder="请发表您的评论,如需站长回复请留下联系方式" class="comment_input"></textarea>
+          <input type="submit" name="" value="评 论" class="comment_sub">
+      </form>
+      <div class="comment_count">
+            {{ data.news.comments_count }}条评论
+        </div>
+
+        <div class="comment_list_con">
+            {% for comment in data.comments %}
+                <div class="comment_list">
+                    <div class="comment_text fl">{{ comment.content }}</div>
+                    {% if comment.parent %}
+                        <div class="reply_text_con fl">
+{#                            <div class="user_name2">{{ comment.parent.user.nick_name }}</div>#}
+                            <div class="reply_text">
+                                {{ comment.parent.content }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="comment_time fl">{{ comment.create_time }}</div>
+{#                    <a href="javascript:;" class="comment_up {% if comment.is_like %}has_comment_up{% endif %} fr" data-commentid="{{ comment.id }}" data-newsid="{{ comment.news_id }}">赞</a>#}
+                    <a href="javascript:;" class="comment_up
+                        {% if comment.is_like %}
+                            has_comment_up
+                        {% endif %} fr"
+                           data-commentid="{{ comment.id }}"
+                           data-likecount="{{ comment.like_count }}"
+                           data-newsid="{{ data.news.id }}">
+                        {% if comment.like_count > 0 %}
+                            {{ comment.like_count }}
+                        {% else %}
+                            赞
+                        {% endif %}
+                    </a>
+                    <a href="javascript:;" class="comment_reply fr">回复</a>
+                    <form class="reply_form fl" data-commentid="{{ comment.id }}" data-newsid="{{ data.news.id }}">
+                        <textarea class="reply_input"></textarea>
+                        <input type="button" value="回复" class="reply_sub fr">
+                        <input type="reset" name="" value="取消" class="reply_cancel fr">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+      <ul>
+        <div class="gbko"> </div>
+      </ul>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="zhuanti">
+      <h2 class="hometitle">特别推荐</h2>
+      <ul>
+        {% for news in data.tuijian_news %}
+            <li> <i><img src="{{ news.index_image_url }}"></i>
+              <p>{{ news.title }} <span><a href="/">阅读</a></span> </p>
+            </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="tuijian">
+      <h2 class="hometitle">点击排行</h2>
+      {% for news in data.news_dict_list %}
+            {% if loop.index == 1 %}
+                <ul class="tjpic">
+                    <i><img src={{ news.index_image_url }}></i>
+                    <p><a href="/news/{{ news.id }}">{{ news.title }}</a></p>
+                </ul>
+            {% endif %}
+            {% if loop.index != 1 %}
+                <ul class="sidenews">
+                    <li> <i><img src={{ news.index_image_url }}></i>
+                      <p><a href="/news/{{ news.id }}">{{ news.title }}</a></p>
+                      <span>{{ news.create_time }}</span> </li>
+                </ul>
+            {% endif %}
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="cloud" id="tagsList">
+      <h2 class="hometitle" style="left: 29px;">标签云</h2>
+      {% for tag in data.admin_dict.tags %}
+            <a href="#" title="{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+    </div>
+    <div class="guanzhu" id="follow-us">
+      <h2 class="hometitle">关注我们 么么哒！</h2>
+      <ul>
+        <li class="email"><a href="/" target="_blank"><span>邮箱帐号</span>{{ data.admin_dict.email }}</a></li>
+        <li class="wxgzh"><a href="/" target="_blank"><span>微信号</span>{{ data.admin_dict.wxid }}</a></li>
+        <li class="wx"><img src="{{ data.admin_dict.wxcode }}"></li>
+      </ul>
+    </div>
+</div>
+  </div>
+</article>
+<!--  图片点击放大  -->
+<div id="outerdiv" style="text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);">
+    <img id="bigimg" style="height: auto;width: 46.6325%;border: 0;
+        margin: auto;position: absolute;top: 0;bottom: 0;left: 0;right: 0;" src="" />
+</div>
+<script type="text/javascript">
+    //图片放大
+    $("#outerdiv").hide();
+    $(function(){
+        $("img").mouseover(function(){
+            $(this).css("cursor","pointer");
+        });
+
+        $("img").click(function(){
+            var _this = $(this);//将当前的pimg元素作为_this传入函数
+            imgShow("#outerdiv", "#bigimg", _this);
+          });
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+        $('#outerdiv').attr('display', 'block');
+        $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+        $(outerdiv).fadeIn("fast");
+
+        $(outerdiv).click(function () {//再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+</script>
+<footer>
+  <p>Design by <a href="/" target="_blank">{{ data.admin_dict.butoom_title }}</a> <a href="/">{{ data.admin_dict.beian }}</a></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

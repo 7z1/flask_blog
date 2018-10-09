@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页_{{ data.admin_dict.title }}</title>
+<meta name="keywords" content="{{ data.admin_dict.keywords }}" />
+<meta name="description" content="{{ data.admin_dict.description }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../static/css/base.css" rel="stylesheet">
+<link href="../static/css/index.css" rel="stylesheet">
+<link href="../static/css/m.css" rel="stylesheet">
+<script src="../static/js/jquery.min.js" type="text/javascript"></script>
+<script src="../static/js/jquery.easyfader.min.js"></script>
+<script src="../static/js/scrollReveal.js"></script>
+<script src="../static/js/common.js"></script>
+<script src="../static/js/index.js"></script>
+<script src="../static/js/tags.js"></script>
+<style type="text/css">
+.cloud {
+    pointer-events: none;
+}
+#tagsList {
+	position: relative;
+{#	width: 450px;#}
+	width: 364px;
+{#	height: 450px;#}
+	height: 364px;
+{#	margin: 150px auto 0;#}
+    left: -40px;
+    pointer-events: none;
+}
+{# pointer-events属性设置穿透，鼠标进入tagsList标签时不会影响a标签的鼠标事件 #}
+#tagsList a {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	font-family: cursive;
+	color: #000331;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 3px 6px;
+    pointer-events: auto;
+}
+#tagsList a:hover {
+	color: #ffcd46;
+	letter-spacing: 2px;
+}
+</style>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header> 
+  <!--menu begin 横向下拉菜单-->
+  <div class="menu">
+    <nav class="nav" id="topnav">
+      <h1 class="logo"><a href="{{ data.admin_dict.logo_image }}">{{ data.admin_dict.logo_name }}</a></h1>
+      <li><a href="/">Index</a> </li>
+      <li><a href="about.html">About Me</a> </li>
+      {% for categories in data.categories_dicts %}
+        <li data-cid="{{ categories.id }}"><a href="#">{{ categories.name }}</a> </li>
+      {% endfor %}
+      <li><a href="time.html">Time</a> </li>
+      <li><a href="gbook.html">Guest Book</a> </li>
+    </nav>
+  </div>
+  <!--menu end--> 
+  <!--mnav begin-->
+  <!--mnav end--> 
+</header>
+<article> 
+  <!--banner begin-->
+ <div class="picsbox"> 
+  <div class="banner">
+    <div id="banner" class="fader">
+      {% for news in data.banner_news %}
+          <li class="slide" ><a href="/news/{{ news.id }}" target="_blank"><img src={{ news.index_image_url }}><span class="imginfo">{{ news.title }}</span></a></li>
+      {% endfor %}
+      <div class="fader_controls">
+        <div class="page prev" data-target="prev">&lsaquo;</div>
+        <div class="page next" data-target="next">&rsaquo;</div>
+        <ul class="pager_list">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--banner end-->
+  <div class="toppic">
+      {% for news in data.top_news %}
+        <li> <a href="/news/{{ news.id }}" target="_blank"> <i><img src={{ news.index_image_url }}></i>
+          <h2>{{ news.title }}</h2>
+          <span>{{ news.source }}</span> </a>
+        </li>
+      {% endfor %}
+  </div>
+  </div>
+  <div class="blank"></div>
+  <!--blogsbox begin-->
+  <div class="blogsbox">
+        {#  TODO  js加载文章即可，此处代码可忽略  #}
+{#      {% for new in data.new_li %}#}
+{#          <div class="blogs" data-scroll-reveal="enter bottom over 1s" >#}
+{#              <h3 class="blogtitle"><a href="./news/{{ new.id }}" target="_blank">{{ new.title }}</a></h3>#}
+{#              <span class="blogpic"><a href="/" title=""><img src={{ new.index_image_url }} alt=""></a></span>#}
+{#              <p class="blogtext">{{ new.digest }}</p>#}
+{#              <div class="bloginfo">#}
+{#                <ul>#}
+{#                  <li class="author"><a href="/">{{ new.source }}</a></li>#}
+{#                  <li class="lmname"><a href="/">{{ new.category.name }}</a></li>#}
+{#                  <li class="timer">{{ new.create_time }}</li>#}
+{#                  <li class="view"><span>{{ new.cliks }}</span>已阅读</li>#}
+{#                  <li class="like">{{ new.like_count }}</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#      {% endfor %}#}
+  </div>
+  <!--blogsbox end-->
+  <div class="sidebar">
+    <div class="tuijian">
+      <h2 class="hometitle">点击排行</h2>
+      {% for news in data.news_dict_list %}
+            {% if loop.index == 1 %}
+                <ul class="tjpic">
+                    <i><img src={{ news.index_image_url }}></i>
+                    <p><a href="/news/{{ news.id }}">{{ news.title }}</a></p>
+                </ul>
+            {% endif %}
+            {% if loop.index != 1 %}
+                <ul class="sidenews">
+                    <li> <i><img src={{ news.index_image_url }}></i>
+                      <p><a href="/news/{{ news.id }}">{{ news.title }}</a></p>
+                      <span>{{ news.create_time }}</span> </li>
+                </ul>
+            {% endif %}
+      {% endfor %}
+    </div>
+    <div class="cloud" id="tagsList">
+      <h2 class="hometitle" style="left: 40px;">标签云</h2>
+        {% for tag in data.admin_dict.tags %}
+            <a href="#" title="{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+    </div>
+    <div class="links">
+      <h2 class="hometitle">友情链接</h2>
+      <ul>
+        {% for link in data.links_li %}
+            <li><a href="{{ link.url }}" target="_blank">{{ link.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="guanzhu" id="follow-us">
+      <h2 class="hometitle">关注我们 么么哒！</h2>
+      <ul>
+        <li class="qq"><a href="/" target="_blank"><span>QQ</span>{{ data.admin_dict.qq }}</a></li>
+        <li class="email"><a href="/" target="_blank"><span>邮箱帐号</span>{{ data.admin_dict.email }}</a></li>
+        <li class="wxgzh"><a href="/" target="_blank"><span>微信号</span>{{ data.admin_dict.wxid }}</a></li>
+        <li class="wx"><img src="{{ data.admin_dict.wxcode }}"></li>
+      </ul>
+    </div>
+  </div>
+</article>
+<footer>
+  <p>Design by <a href="#" target="_blank">{{ data.admin_dict.butoom_title }}</a> <a href="/">{{ data.admin_dict.beian }}</a></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<link rel="stylesheet" href="../../static/admin/css/jquery.pagination.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.pagination.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/replygbook.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：内容管理 > 留言管理
+		<form class="news_filter_form">
+			<input type="text" name="keywords" placeholder="请输入关键字" class="input_txt">
+			<input type="submit" value="搜 索" class="input_sub">
+		</form>
+	</div>
+		
+
+	<div class="pannel">			
+			<table class="common_table">
+                <tr>
+                    <th width="5%">id</th>
+                    <th width="10%">昵称</th>
+                    <th width="10%">ip</th>
+                    <th width="10%">邮箱</th>
+                    <th width="40%">留言</th>
+                    <th width="15%">发布时间</th>
+                    <th width="10%">管理操作</th>
+                </tr>
+                {% for gbook in data.gbook_list %}
+                    <tr>
+                        <td>{{ gbook.id }}</td>
+                        <td>{{ gbook.replyName }}</td>
+                        <td>{{ gbook.ip }}</td>
+                        <td>{{ gbook.email }}</td>
+                        <td>{{ gbook.content }}</td>
+                        <td>{{ gbook.create_time }}</td>
+                        <td>
+                            <a href="javascript:;" class="edit" data-id="{{ gbook.id }}">回复</a>
+{#                            <a href="{{ url_for('admin.gbook_reply') }}?gbook_id={{ gbook.id }}" class="edit">回复</a>#}
+                            <br>
+                            <a href="{{ url_for('admin.gbook_delete') }}?gbook_id={{ gbook.id }}" class="delete">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+		</div>
+
+        <div class="box">
+			<div id="pagination" class="page"></div>
+		</div>
+
+        <script>
+			$(function() {
+				$("#pagination").pagination({
+					currentPage: {{ data.current_page }},
+                    totalPage: {{ data.total_page }},
+                    callback: function(current) {
+                        window.location = '/admin/gbook_edit?p=' + current
+					}
+				});
+			});
+		</script>
+		
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3 style="background: #2e4051">回复留言</h3>
+					<div class="form_group mt50">
+						<label class="input_label">回复内容：</label><input type="text" class="input_txt3">
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm" style="background: #2e4051">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel" style="background: #2e4051">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+</html>

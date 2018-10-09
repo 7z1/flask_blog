@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../../static/admin/js/jquery.form.min.js"></script>
+	<script src="../../static/admin/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="../../static/admin/js/tinymce_setup.js"></script>
+	<script src="../../static/admin/js/admin_user_detail.js"></script>
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：系统管理> 管理员编辑
+		</div>
+		<div class="pannel">
+			<form class="news_edit" style="margin-top: 20px">
+	    	<div class="form_group">
+                <label>用 户 名：</label>
+                <input name="nick_name" type="text" class="input_txt2" value="{{ data.admin_user_dict.nick_name }}">
+            </div>
+            <div class="form_group">
+                <label>密    码：</label>
+                <input type="password" name="password" placeholder="不修改密码无需填写" class="input_txt2">
+            </div>
+            <div class="form_group">
+                <label>确认密码：</label>
+                <input type="password" name="password" placeholder="不修改密码无需填写" class="input_txt2">
+            </div>
+            <div class="form_group">
+                <label>手机：</label>
+                <input name="mobile" type="text" class="input_txt2" value="{{ data.admin_user_dict.mobile }}">
+            </div>
+            <div class="form_group">
+                <label>个性签名：</label>
+                <input name="signature" type="text" class="input_txt2" value="{{ data.admin_user_dict.signature }}">
+            </div>
+            <div class="form_group">
+                <label>性别：</label>
+                <select class="sel_opt" name="gender">
+                    <option value="MAN">男</option>
+                    <option value="WOMAN">女</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label>用户头像：</label>
+                <img src="{{ data.admin_user_dict.avatar_url }}" alt="用户头像" class="index_pic">
+            </div>
+            <div class="form_group">
+                <label>上传头像：</label>
+                <input type="file" name="avatar_url" class="input_file">
+            </div>
+
+			<div class="form_group indent_group line_top">
+				<input type="submit" value="确定" class="confirm">
+				<input type="button" value="取消" class="cancel" onclick="cancel()">
+			</div>
+            {# 添加隐藏字段新闻id #}
+            <input type="hidden" name="admin_id" value="{{ data.admin_user_dict.id }}">
+			</form>	
+		</div>
+
+</body>
+</html>
