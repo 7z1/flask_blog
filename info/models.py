@@ -308,6 +308,7 @@ class Gbook(BaseModel, db.Model):
             "content": self.content.replace('<', '(') if '<' in self.content else self.content,
             "replyBody": [self.son.to_dict()] if self.son else "",
             "beReplyName": self.beReplyName if self.beReplyName else "热心网民",
+            "create_time": self.create_time,
         }
         return resp_dict
 
