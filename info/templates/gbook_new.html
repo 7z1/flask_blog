@@ -252,8 +252,8 @@
                 data: JSON.stringify(params),
                 success: function (resp) {
                     if (resp.errno != '0'){
-                        // location.reload()
                         alert(resp.errmsg);
+                        location.reload();
                     }
                 }
 
