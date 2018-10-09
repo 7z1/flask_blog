@@ -26,7 +26,8 @@
    2. python manage.py db migrate
    3. python manage.py db upgrade
 7. 导入数据库，导入数据库之后谨慎起见再重新将数据库设置，以及相关的表字段设置charset=utf8mb4
-8. 运行程序
+8. 安装redis，并启动redis-server，如果修改为flask自带的session存储cookie和session则不需要安装
+9. 运行程序
 
 
 
@@ -173,7 +174,7 @@ http://www.useragentstring.com/?uas={{ua}}&getJSON=all
 设置评论和留言支持emoji表情插入，防止访客留言时输入emoji表情导致报错
 
 设置about_me的字段支持utf8mb4
-ALTER table info_adminuser modify about_me text character set utf8mb4 colla
+ALTER table info_adminuser modify about_me text character set utf8mb4 collate utf8mb4_unicode_ci;
 
 设置留言表的字段支持utf8mb4
 ALTER table info_gbook modify email varchar(32) character set utf8mb4 collate utf8mb4_unicode_ci;
