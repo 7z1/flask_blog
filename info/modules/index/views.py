@@ -1,3 +1,6 @@
+import time
+from datetime import datetime, timedelta
+
 from info import constants, db
 from info.models import User, News, Category, AdminUser, NewsAction, Gbook, Link
 from info.utils.common import user_login_data, get_ua
@@ -172,6 +175,33 @@ def add_gbook():
     if not content:
         return jsonify(errno=RET.PARAMERR, errmsg="参数有误")
 
+    # 判断是否恶意留言
+    # 获取当前时间
+    now = time.localtime()
+
+    # 获取到今天的时间字符串
+    today_date_str = ('%d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday))
+    # 转成时间对象
+    today_date = datetime.strptime(today_date_str, '%Y-%m-%d')
+    # 取道当天的0点0分
+    begin_date = today_date - timedelta(days=0)
+    # 取当天结束时间，也就是第二天的0点0分
+    end_date = today_date - timedelta(days=-1)
+    # 定义一个计数变量
+    count = 0
+    # 判断当天是否重复留言，且超过限制
+    try:
+        count = Gbook.query.filter(Gbook.ip == ip, Gbook.create_time >= begin_date, Gbook.update_time < end_date).count()
+    except Exception as e:
+        current_app.logger.error(e)
+
+    if count >= 10:
+        # 恶意刷留言
+        print(count, ip)
+        return jsonify(errno=RET.REQERR, errmsg='请勿恶意发布留言')
+
+    print(count, ip)
+
     # 创建模型类对象
     gbook_obj = Gbook()
 
@@ -304,8 +334,6 @@ def news_list_page():
 
 @index_blu.route('/')
 def index():
-    keywords = request.args.get('keyboard', None)
-    print(keywords)
     # 新闻点击排行信息
     news_list = []
     # 按点击量查询并且返回6条数据
@@ -320,9 +348,6 @@ def index():
     # status==0的时候代表新闻通过审核
     filters = [News.status == 0]
 
-    if keywords:
-        # 如果有关键字，将关键字假如过滤
-        filters.append(News.title.contains(keywords))
 
     try:
         paginate = News.query.filter(*filters).order_by(News.create_time.desc()).paginate(1, 10, False)
