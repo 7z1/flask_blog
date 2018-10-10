@@ -11,7 +11,7 @@ class Config(object):
     LOG_LEVEL = logging.DEBUG
     SECRET_KEY = "EjpNVSNQTyGi1VvWECj9TvC/+kq3oujee2kTfQUs8yCM6xX9Yjq52v54g+HVoknA"
     # 数据库的配置信息
-    SQLALCHEMY_DATABASE_URI = "mysql://用户名:密码@127.0.0.1:3306/数据库?charset=utf8mb4"
+    SQLALCHEMY_DATABASE_URI = "mysql://root:demonisme@127.0.0.1:3306/blog_site?charset=utf8mb4"
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     REDIS_HOST = '127.0.0.1'

@@ -76,5 +76,8 @@ def create_app(config_name):
     from info.modules.admin import admin_blu
     app.register_blueprint(admin_blu)
 
+    from info.modules.search import search_blu
+    app.register_blueprint(search_blu)
+
     return app
 

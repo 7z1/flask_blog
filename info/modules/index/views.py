@@ -197,10 +197,7 @@ def add_gbook():
 
     if count >= 10:
         # 恶意刷留言
-        print(count, ip)
         return jsonify(errno=RET.REQERR, errmsg='请勿恶意发布留言')
-
-    print(count, ip)
 
     # 创建模型类对象
     gbook_obj = Gbook()
@@ -347,7 +344,6 @@ def index():
 
     # status==0的时候代表新闻通过审核
     filters = [News.status == 0]
-
 
     try:
         paginate = News.query.filter(*filters).order_by(News.create_time.desc()).paginate(1, 10, False)
